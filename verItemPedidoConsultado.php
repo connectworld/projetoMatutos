@@ -41,7 +41,7 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
     $con = abrirConexao();
     mysql_set_charset('UTF8', $con);
 
-    $sql = mysql_query("select i.atendimento_cozinha,i.codigo_pedidoCardapio,p.data_pedido,i.codigo_itemCardapio,i.nome_cardapio,i.descricao_cardapio,i.valor_unitario,i.quantidade
+    $sql = mysql_query("select i.codigo_pedidoCardapio,p.data_pedido,i.codigo_itemCardapio,i.nome_cardapio,i.descricao_cardapio,i.valor_unitario,i.quantidade
                         from item_pedido i
                         left join pedido p
                         on p.codigo_pedido = i.codigo_pedidoCardapio
@@ -56,13 +56,12 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
 			<?php 
 				include 'logo.php';
 			?>
-                        <a href="gerenciadoDePaginas.php?pagina=cadastros">
+                        <a href="cadastros.php">
 				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
 			</a><br><br>
-                       <div>
-                           <h2 align="center">Ver Itens do Pedido</h2>
-                       </div>
-                        <br>
+                        <div>
+                            <h2 align="center">Ver Itens do Pedido</h2>
+                        </div>
                         <div>
                             <table border="1" style="width: 30%;">
                                 <tr>
@@ -84,18 +83,6 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                             </table>
                             <br>
                         </div>
-                        <div>
-                            <table border="1" style="padding: 10px; width: 400px;" align="center">
-                                <tr style="padding: 10px;" align="center">
-                                    <th align="center" style="background-color: yellow;color:yellow;">AMARELO</th>
-                                    <th> ITEM NÃO FEITO</th>
-                                </tr>
-                                <tr style="padding: 10px">
-                                    <th style="background-color: #7FFF00;color:#7FFF00">VERDE</th>
-                                    <th> ITEM FEITO</th>
-                                </tr>
-                            </table>
-                        </div>
                         <div align="center">
                             <h3> ITENS DO PEDIDO</h3>
                         </div>
@@ -110,7 +97,6 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                 <th align="center" style='width: 5%;color : black'><div align="center"> VALOR UNITARIO </div></th>
                 <th align="center" style='width: 5%;color : black'><div align="center"> QTD </div></th>
                 <th align="center" style='width: 5%;color : black'><div align="center"> SUB TOTAL </div></th>
-                <th align="center" style='width: 5%;color : black'><div align="center"> AÇÃO </div></th>
             </tr>
 	 </thead>
 <?php	
@@ -118,19 +104,8 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                 
 		while ($linha = mysql_fetch_array($sql)) {
                   //  $cod = $linha['CODIGO'];
-                  if ($linha['atendimento_cozinha'] == 1) {   
 ?>
-         <tr align="center" style="margin-top: 10px; background-color: #7FFF00;" id="linhaMudaCor">
-         
- <?php }
-       else{
-           
- ?>
-              <tr align="center" style="margin-top: 10px; background-color:yellow;" id="linhaMudaCor">
-                 
-  <?php
-       }
-  ?>
+         <tr align="center" style="margin-top: 10px;">
 	 	<td align="center" style="color : black"><?php echo $linha['codigo_pedidoCardapio']?></td>
 	 	<td align="center" style="color : black"><?php echo date('d/m/Y', strtotime($linha['data_pedido'])); ?></td>
                 <td align="center" style="color : black"><?php echo $linha['codigo_itemCardapio']?></td>
@@ -140,25 +115,8 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                     <?php echo $linha['valor_unitario']; $cont = $cont + ($linha['valor_unitario'] * $linha['quantidade']);?>
                 </td>
                  <td align="center" style="color : black"><?php echo $linha['quantidade']?></td>
-                 <td align="center" style="color : black"><?php echo $linha['quantidade'] * $linha['valor_unitario'];?></td>
-                 <?php
-                    if ($linha['atendimento_cozinha']== 1){
-                 ?>
-                 <td align="center" style="color : black">
-                     <a href="pedidoController.php?funcao=atualizaAtendimentoItem&flag_atm=0&codigoItem=<?php echo $linha['codigo_itemCardapio'];?>&codigoPedido=<?php echo $linha['codigo_pedidoCardapio'];?>&nomeMesa=<?php echo $array[1];?>">
-                        <input type="button" class="btn btn-info" name="btItemFeito" id="btItemFeito" value="DESFAZER" />
-                    </a>
-                 </td>
-                 <?php
-                    }
-                    else {
-                 ?>
-                 <td align="center" style="color : black">
-                     <a href="pedidoController.php?funcao=atualizaAtendimentoItem&flag_atm=1&codigoItem=<?php echo $linha['codigo_itemCardapio'];?>&codigoPedido=<?php echo $linha['codigo_pedidoCardapio'];?>&nomeMesa=<?php echo $array[1];?>">
-                        <input type="button" class="btn btn-info" name="btItemFeito" id="btItemFeito" value="FAZER" />
-                    </a>
-                 </td>
-                <?php }} mysql_close($con);?>
+                 <td align="center" style="color : black"><?php echo $linha['quantidade'] * $linha['valor_unitario']?></td>
+                  <?php } mysql_close($con);?>
 	 </tr>
 	
 </table>
@@ -177,6 +135,15 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
         </tr>         
     </table>
     <br>
+    <div align="center">
+    <div style="padding: 3px;">
+        <a href="controllerPedido.php?codigoPedido=<?php echo $array[0];?>&funcao=imprimirItens">
+            <button class="btn btn-info" type="submit">
+                    IMPRIMIR
+            </button>
+        </a>
+    </div>
+</div>
 </div>
 
 <?php 
@@ -190,7 +157,6 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
     
 </body>
 </html>
-
 
 
 

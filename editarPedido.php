@@ -98,6 +98,10 @@ $sql2 = mysql_query("select * from cardapio where exclusao_logica = 1");
 				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
 			</a><br><br>
                         <div>
+                            <h2 align="center">Tela para Editar Pedido</h2>
+                        </div>
+                        <br />
+                        <div>
                             <table border="1" style="width: 50%;">
                                 <tr>
                                     <th>

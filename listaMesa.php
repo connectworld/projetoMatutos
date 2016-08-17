@@ -51,6 +51,10 @@ $sql = mysql_query("select * from mesa where exclusao_logica = 1");
                         <a href="gerenciadoDePaginas.php?pagina=cadastros">
 				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
 			</a><br><br>
+                        <div>
+                            <h2 align="center">Listagem de Mesa</h2>
+                        </div>
+                        <br>
                         <table id='tabela' border='1' style="padding: 10px;">
 	<thead>
             <tr align="right" style='background-color: #0080FF;'>
@@ -84,6 +88,10 @@ $sql = mysql_query("select * from mesa where exclusao_logica = 1");
 	 </tr>
 	
 </table>
+<br><br>
+<div style="padding: 3px;">
+    <a href="gerenciadoDePaginas.php?pagina=cadastroMesa"><button class="btn btn-info" type="submit">Cadastrar Mesa</button></a>
+</div>
 <br><br>
 <?php 
 	include 'rodape.php';

@@ -21,13 +21,13 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
        
         $cont = 0;
         if (isset($_SESSION["arrayCodigo"]) && $funcao == "addCardapio"){
-            //echo "tem array codigo";
+            
             $dadosCardapioCodigo = $_SESSION["arrayCodigo"];
             $dadosCardapioNome = $_SESSION["arrayNome"];
             $dadosCardapioDescricao = $_SESSION["arrayDescricao"];
             $dadosCardapioPreco = $_SESSION["arrayPreco"];
             $dadosCardapioQuantidade = $_SESSION["arrayQuantidade"];
-            //$dadoCArdapioQauntidade = $_SESSION[]
+            
             
         }
         
@@ -358,10 +358,8 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
                     
                     $quantidade = count($dadosCardapioCodigo);
   
-                    //$sql = mysql_query("insert into pedido (data_pedido,cliente,sitaucao,valor_total,codigo_refMesa) values (CURRENT_DATE(),'$nomeCliente','A',0,'$codigoMesa')");
-    
                     for($i = 0; $i < $quantidade ; $i++) {
-                    //echo $sql = mysql_query("insert into item_pedido (codigo_pedidoCardapio,codigo_itemCardapio,nome_cardapio,descricao_cardapio,valor_unitario) values ('$ultimoPedido','$dadosCardapioCodigo[$i]','$dadosCardapioNome[$i]','$dadosCardapioDescricao[$i]','$dadosCardapioPreco[$i]')");
+                    
                        echo $sql = "insert into item_pedido (codigo_pedidoCardapio,codigo_itemCardapio,nome_cardapio,descricao_cardapio,valor_unitario,quantidade,flag_situacao) values ($codigoPedido,'$dadosCardapioCodigo[$i]','$dadosCardapioNome[$i]','$dadosCardapioDescricao[$i]','$dadosCardapioPreco[$i]','$dadosCardapioQuantidade[$i]','A')";
                        $resultado = mysql_query($sql);
                     }
@@ -422,6 +420,7 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
             }
         }
         elseif($funcao == "consultarPedido"){
+            //FUNCAO QUE CONVERTE DATA BRASILEIRA EM DATA UNIVERSAL
              function date_converter($_date = null) {
                 $format = '/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/';
                 if ($_date != null && preg_match($format, $_date, $partes)) {
@@ -434,19 +433,44 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
             $situacao = $_POST['situacao'];
             $cont = 0;
             
-            $sql = "select * from pedido where data_pedido between ('$dataInicial')and ('$dataFinal') and sitaucao = '$situacao'";
+            if ($situacao != "todos"){
             
-            $resultado = mysql_query($sql);
-            if ($resultado){
-                while ($linha = mysql_fetch_array($resultado)) {
-                    $cont = $cont + 1;
+                $sql = "select * from pedido where data_pedido between ('$dataInicial')and ('$dataFinal') and sitaucao = '$situacao'";
+
+                $resultado = mysql_query($sql);
+                if ($resultado){
+                    while ($linha = mysql_fetch_array($resultado)) {
+                        $cont = $cont + 1;
+                    }
+                    if ($cont != 0){
+                        mysql_close($con);
+                        header("Location: exibePedidoConsultado.php?dataInicial=$dataInicial&dataFinal=$dataFinal&situacao=$situacao");
+                    }
+                    else{
+                        mysql_close($con);
+                         echo "<script>window.location='consultaPedidos.php';alert('NAO HA REGISTROS');</script>";
+                    }
                 }
-                if ($cont != 0){
-                    mysql_close($con);
-                    header("Location exibePedidoConsultado.php?dataInicial=$dataInicial&dataFinal=$dataFinal");
-                }
-                else{
-                    echo "não há registo";
+            }
+            elseif($situacao == "todos"){
+                echo "entrou";
+                echo $sql = "select * from pedido where data_pedido between ('$dataInicial')and ('$dataFinal')";
+                $resultado = mysql_query($sql);
+                if ($resultado){
+                    echo "1";
+                    while ($linha = mysql_fetch_array($resultado)) {
+                        $cont = $cont + 1;
+                        
+                    }
+                    if ($cont != 0){
+                        
+                        mysql_close($con);
+                        header("Location: exibePedidoConsultado.php?dataInicial=$dataInicial&dataFinal=$dataFinal&situacao=$situacao");
+                    }
+                    else{
+                        mysql_close($con);
+                        echo "<script>window.location='consultaPedidos.php';alert('NAO HA REGISTROS');</script>";
+                    }
                 }
             }
         }
@@ -473,7 +497,41 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
                     }
             }
         }
+        elseif ($funcao == "reabrirPedido") {
+            $codigoPedido = $_GET["codigoPedido"];
+            $sql = "update pedido set situacao = 'A' where codigo_pedido = $codigoPedido";
+            $resultado = mysql_query($sql);
+            if ($resultado) {
+                mysql_close($con);
+                echo "<script>window.location='consultaPedidos.php';alert('PEDIDO REABERTO COM SUCESSO');</script>";
+            }
+            else{
+                mysql_close($con);
+                echo "<script>window.location='consultaPedidos.php';alert('PEDIDO REABERTO COM SUCESSO');</script>";
+            }
+        }
+        elseif ($funcao == "estornarPedido") {
+            $codigoPedido = $_GET["codigoPedido"];
+            $update = "update pedidos_faturados set data_horaEstorno = CURRENT_TIMESTAMP(), flag_estorno = 1 where codigo_pedidoFaturado = $codigoPedido";
+            $resultado = mysql_query($update);
+            if ($resultado) {
+                $update = "update pedido set sitaucao = 'C' where codigo_pedido = $codigoPedido";
+                $resultado = mysql_query($update);
+                if ($resultado) {
+                     echo "<script>window.location='consultaPedidos.php';alert('ESTORNADO COM SUCESSO');</script>";
+                }
+                else{
+                    echo "<script>window.location='consultaPedidos.php';alert('ERRO AO TENTAR ESTONAR FATURA');</script>";
+                }
+            }
+            else {
+                echo "<script>window.location='consultaPedidos.php';alert('ERRO AO ESTORNAR PEDIDO');</script>";
+            }
             
+        }    
+   }
+   else{
+       header("Location: cadastros.php");
    }
         
 ?>

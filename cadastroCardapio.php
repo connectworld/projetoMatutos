@@ -56,7 +56,8 @@
 	<br>
     <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
-            <form method="post" action="processaCadastroCardapio.php" enctype="multipart/form-data">
+            <form method="post" action="cardapioController.php" enctype="multipart/form-data">
+                <input type="hidden" name="funcao" value="salvarCardapio" id="funcao" />
 		<div class="form-group">
                     <label for="validate-text">Nome:</label>
 			<div class="input-group">

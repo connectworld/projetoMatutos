@@ -46,19 +46,19 @@
 				        	<a href="gerenciadoDePaginas.php?pagina=listarCardapio" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/listagem.png"/><br>
 				        	</a>
-                                            <a href="gerenciadoDePaginas.php?pagina=listarCardapio" style="text-decoration: none;" class="links">&nbsp;&nbsp;&nbsp;LISTAR CARDÁPIO</a>
+                                            <a href="gerenciadoDePaginas.php?pagina=listarCardapio" style="text-decoration: none;" class="links"><div align="center">LISTAR CARDAPIO</div></a>
 				        </div>
 				        <div class="col-md-3 col-sm-4 col-xs-6">
 				        	<a href="gerenciadoDePaginas.php?pagina=cadastroMesa" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/mesa.jpg"/><br>
 				        	</a>
-                                            <a class="links" href="gerenciadoDePaginas.php?pagina=cadastroMesa" style="text-decoration: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CADASTRAR MESA</a>
+                                            <a class="links" href="gerenciadoDePaginas.php?pagina=cadastroMesa" style="text-decoration: none;"><div align="center">CADASTRO DE MESA</div></a>
 				        </div>
 				        <div class="col-md-3 col-sm-4 col-xs-6">
 				        	<a href="gerenciadoDePaginas.php?pagina=listaMesa" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/listaMesa.png"/><br>
 				        	</a>
-                                            <a class="links" href="gerenciadoDePaginas.php?pagina=listaMesa" style="text-decoration: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LISTA MESA</a>
+                                            <a class="links" href="gerenciadoDePaginas.php?pagina=listaMesa" style="text-decoration: none;"><div align="center">LISTAR MESA</div></a>
 				        </div>      
 				    </div>
 				    <br><br>
@@ -73,19 +73,19 @@
                                             <a href="gerenciadoDePaginas.php?pagina=consultaPedidos" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/listaPedido.png"/><br>
 				        	</a>
-                                            <a class="links" href="gerenciadoDePaginas.php?pagina=consultaPedidos" style="text-decoration: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONSULTAR PEDIDOS</a>
+                                            <a class="links" href="gerenciadoDePaginas.php?pagina=consultaPedidos" style="text-decoration: none;"><div align="center">CONSULTAR PEDIDOS</div></a>
 				        </div>
                                        <div class="col-md-3 col-sm-4 col-xs-6">
                                            <a href="gerenciadoDePaginas.php?pagina=exibePedidosDoDia" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/listaPedido.png"/><br>
                                                 </a>
-                                           <a class="links" href="gerenciadoDePaginas.php?pagina=exibePedidosDoDia" style="text-decoration: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PEDIDOS EM ABERTO</a>
+                                           <a class="links" href="gerenciadoDePaginas.php?pagina=exibePedidosDoDia" style="text-decoration: none;"><div align="center">PEDIDOS EM ABERTO</div></a>
 				        </div>
                                        <div class="col-md-3 col-sm-4 col-xs-6">
                                            <a href="gerenciadoDePaginas.php?pagina=atendimentoCozinha" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/listaPedido.png"/><br>
                                                 </a>
-                                           <a class="links" href="gerenciadoDePaginas.php?pagina=atendimentoCozinha" style="text-decoration: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ATENDIMETNO COZINHA</a>
+                                           <a class="links" href="gerenciadoDePaginas.php?pagina=atendimentoCozinha" style="text-decoration: none;"><div align="center">ATENDIMENTO COZINHA</div></a>
 				        </div>
 				    </div>
                                     <br><br>
@@ -100,10 +100,11 @@
 				        	<a href="gerenciadoDePaginas.php?pagina=listarUsuario" style="text-decoration: none;">
                                                     <img class="img-responsive" src="img/listaUsuario.png"/><br>
 				        	</a>
-                                            <a class="links" href="gerenciadoDePaginas.php?pagina=listarUsuario" style="text-decoration: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LISTAR USUÁRIO</a>
+                                            <a class="links" href="gerenciadoDePaginas.php?pagina=listarUsuario" style="text-decoration: none;"><div align="center">LISTAR USUÁRIO</div></a>
 				        </div>
 				</div>
 			</div>
+                            <BR><BR>
 			<?php 
 			include 'rodape.php';
 		?>

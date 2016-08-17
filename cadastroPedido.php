@@ -43,52 +43,73 @@ $sql = mysql_query("select * from mesa where exclusao_logica = 1");
 
 ?>
 <div align="center">
-	<table border="1" style="width: 90%;">
-		<tr><td>
-		<div class="container">	
-			<!-- Codrops top bar -->
-			<?php 
-				include 'logo.php';
-			?>
-                        <a href="gerenciadoDePaginas.php?pagina=cadastros">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
-			</a><br><br>
-      <div align="center">
-          <h3> Selecione a Mesa do Pedido <h3>                 
-      </div>
-      <table id='tabela' border='1' style="padding: 10px;">
-	<thead>
-            <tr align="right" style='background-color: #848484;'>
-                <th align="right" style='width: 5%; color : black'> <div align="center"> CODIGO </div></th>
-		<th align="center" style='width: 10%;color : black'><div align="center"> NOME </div></th>
-                <th align="center" style='width: 10%;color : black'><div align="center"> OBSERVAÇÃO </div></th>
-                <th align="center" style='width: 5%;color : black'><div align="center"> EDITAR </div></th>
-            </tr>
-	 </thead>
-<?php	
-		//$cont =  0;
-		while ($linha = mysql_fetch_array($sql)) {
-                  //  $cod = $linha['CODIGO'];
-?>
-         <tr align="center" style="margin-top: 10px;">
-	 	<td align="center" style="color : black"><?php echo $linha['codigo_mesa']?></td>
-	 	<td align="center" style="color : black"><?php echo $linha['nome']?></td>
-	 	<td align="center" style="color : black"><?php echo $linha['observacao']?></td>
-	 	<td>
-                    <div style="padding: 3px;">
-                        <a href="pedidoController.php?cod=<?php echo $linha['codigo_mesa']?>&funcao=addPedido"><button class="btn btn-info">Add</button></a>
+    <table border="1" style="width: 90%;">
+	<tr>
+            <td>
+		<div class="container">
+                    <?php 
+			include 'logo.php';
+                    ?>
+                    <a href="gerenciadoDePaginas.php?pagina=cadastros">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
+                    </a>
+                    <br><br>
+                    <div>
+                        <h2 align="center">Tela inicial de Pedido</h2>
                     </div>
-                </td>
-                  <?php } mysql_close($con);?>
-	 </tr>
+                    <br><br>
+                    <div align="center">
+                        <h3> Selecione a Mesa do Pedido </h3>                 
+                    </div>
+                    <table id='tabela' border='1' style="padding: 10px;">
+                        <thead>
+                            <tr align="right" style='background-color: #848484;'>
+                                <th align="right" style='width: 5%; color : black'>
+                                    <div align="center"> CODIGO </div>
+                                </th>
+                                <th align="center" style='width: 10%;color : black'>
+                                    <div align="center"> NOME </div>
+                                </th>
+                                <th align="center" style='width: 10%;color : black'>
+                                    <div align="center"> OBSERVAÇÃO </div>
+                                </th>
+                                <th align="center" style='width: 5%;color : black'>
+                                    <div align="center"> EDITAR </div>
+                                </th>
+                            </tr>   
+                        </thead>
+                    <?php	
+                        while ($linha = mysql_fetch_array($sql)) {                  
+                    ?>
+                      <tr align="center" style="margin-top: 10px;">
+                        <td align="center" style="color : black">
+                            <?php echo $linha['codigo_mesa']?>
+                        </td>
+                        <td align="center" style="color : black">
+                            <?php echo $linha['nome']?>
+                        </td>
+                        <td align="center" style="color : black">
+                            <?php echo $linha['observacao']?>
+                        </td>
+                        <td>
+                            <div style="padding: 3px;">
+                                <a href="pedidoController.php?cod=<?php echo $linha['codigo_mesa']?>&funcao=addPedido">
+                                    <button class="btn btn-info">Add</button>
+                                </a>
+                            </div>
+                        </td>
+                  <?php 
+                        } mysql_close($con);
+                  ?>
+                    </tr>
 	
-</table>
-<br><br>
-<?php 
-	include 'rodape.php';
-?>
-</div>
-</td>
+                </table>
+            <br><br>
+            <?php 
+                include 'rodape.php';
+            ?>
+        </div>
+    </td>
 </tr>
 </table>
 </div>

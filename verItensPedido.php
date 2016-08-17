@@ -59,19 +59,9 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                         <a href="cadastros.php">
 				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
 			</a><br><br>
-                        <!--
-                        <table  class="table">
-                           <thead>
-                                <tr align="right" style='background-color: #0080FF;'>
-                                    <th align="right" style='width: 1%; color : black'> <div align="center"> CODIGO </div></th>
-                                    <th align="right" style='width: 8%; color : black'> <div align="center"> DATA </div></th>
-                                </tr>
-                           </thead>
-                           <tr align="center" style="margin-top: 10px;">
-                                <td align="center" style="color : black"><?php echo $array[0];?></td>
-                                <td align="center" style="color : black"><?php echo $array[1];?></td>
-                           </tr>
-                        </table> -->
+                        <div>
+                            <h2 align="center">Ver Itens do Pedido</h2>
+                        </div>
                         <div>
                             <table border="1" style="width: 30%;">
                                 <tr>

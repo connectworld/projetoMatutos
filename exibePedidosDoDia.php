@@ -58,6 +58,9 @@ and p.sitaucao = 'A';");
                         <a href="gerenciadoDePaginas.php?pagina=cadastros">
 				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
 			</a><br><br>
+                        <div>
+                            <h2 align="center">Pedidos do Dia</h2>
+                        </div>
                         <table id='tabela' border='1' style="padding: 10px;">
 	<thead>
             <tr align="right" style='background-color: #0080FF;'>
