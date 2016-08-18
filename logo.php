@@ -23,6 +23,26 @@
 	</tr>
 </table>	
 </div>
+    <div align="left">
+        <?php
+            $dataIni = date("Y-m-d 00:00:00");
+            $dataFin = date("Y-m-d 23:59:59");
+            $instrucao = "select SUM(p.valor_totalPedido) as lucro from pedidos_faturados p where p.data_horaFaturamento BETWEEN ('$dataIni')
+                          and ('$dataFin');";
+            $resultado = mysql_query($instrucao);
+            $lucro = 0;
+            while ($row = mysql_fetch_array($resultado)) {
+                $lucro = $lucro + $row['lucro'];
+            }
+            
+        ?>
+	<table class="table" style="width:25%;">
+            <tr style="font-family: arial; font-size: 17pt">
+		<th>Lucro do Dia</th>
+		<th><?php echo "R$ ". $lucro?></th>
+        </tr>
+</table>	
+</div>
 </div>
 <header>
     <div><img src="img/logo.png" width="321" height="154" alt="logo" longdesc="#"></div> 

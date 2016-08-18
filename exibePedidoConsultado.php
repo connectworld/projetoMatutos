@@ -45,7 +45,7 @@ if (isset($_GET["dataInicial"])) {
     switch ($situacao) {
         
         case "todos":
-           echo $sql = mysql_query("select p.codigo_pedido,p.data_pedido,p.cliente, m.nome, p.valor_total, p.sitaucao
+            $sql = mysql_query("select p.codigo_pedido,p.data_pedido,p.cliente, m.nome, p.valor_total, p.sitaucao
                 from pedido p
                 left join mesa m
                 on p.codigo_refMesa = m.codigo_mesa
@@ -53,7 +53,7 @@ if (isset($_GET["dataInicial"])) {
                 and p.codigo_refMesa = m.codigo_mesa");
         break;
         case "F" || "C" || "B" || "A":
-           echo $sql = mysql_query("select p.codigo_pedido,p.data_pedido,p.cliente, m.nome, p.valor_total, p.sitaucao
+            $sql = mysql_query("select p.codigo_pedido,p.data_pedido,p.cliente, m.nome, p.valor_total, p.sitaucao
                 from pedido p
                 left join mesa m
                 on p.codigo_refMesa = m.codigo_mesa

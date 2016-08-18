@@ -382,8 +382,9 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
             
         }
         elseif($funcao == "faturarPedido"){
-            echo $valorTotalPedido = $_POST['valor_total'];
-            echo $codigoPedido = $_POST['codigoPedido'];
+            $valorTotalPedido = $_POST['valor_total'];
+            $codigoPedido = $_POST['codigoPedido'];
+            $usuario = $_SESSION["CODIGO"];
             $cliente = "";
             $sql = "select * from pedido where codigo_pedido = $codigoPedido";
             $resultado = mysql_query($sql);
@@ -391,11 +392,11 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
                 while ($linha = mysql_fetch_array($resultado)) {
                     $cliente = $linha['cliente'];
                 }
-               echo $sql = "insert into pedidos_faturados (data_horaFaturamento,codigo_pedidofaturado,cliente_pedido,valor_totalPedido,flag_estorno) values (CURRENT_TIMESTAMP(),'$codigoPedido','$cliente','$valorTotalPedido',0)";
+               $sql = "insert into pedidos_faturados (data_horaFaturamento,codigo_pedidofaturado,cliente_pedido,valor_totalPedido,flag_estorno,usuario_faturador) values (CURRENT_TIMESTAMP(),'$codigoPedido','$cliente','$valorTotalPedido',0,'$usuario')";
                $resultado = mysql_query($sql);
                if ($resultado){
                    mysql_close($con);
-                   header("Location: imprimeComprovante.php?codigoPedido=$codigoPedido");
+                  header("Location: imprimeComprovante.php?codigoPedido=$codigoPedido");
                }
                else{
                    mysql_close($con);
@@ -408,8 +409,8 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
             }
         }
         elseif($funcao == "cancelarPedido"){
-            echo $codigoPedido = $_GET['codigoPedido'];
-            echo $sql = "update pedido set sitaucao = 'C' where codigo_pedido = $codigoPedido";
+            $codigoPedido = $_GET['codigoPedido'];
+            $sql = "update pedido set sitaucao = 'C' where codigo_pedido = $codigoPedido";
             $resultado = mysql_query($sql);
             if ($resultado){
                 mysql_close($con);
@@ -497,39 +498,96 @@ if (isset($_GET["funcao"]) || isset($_POST["funcao"])){
                     }
             }
         }
-        elseif ($funcao == "reabrirPedido") {
-            $codigoPedido = $_GET["codigoPedido"];
-            $sql = "update pedido set situacao = 'A' where codigo_pedido = $codigoPedido";
-            $resultado = mysql_query($sql);
-            if ($resultado) {
-                mysql_close($con);
-                echo "<script>window.location='consultaPedidos.php';alert('PEDIDO REABERTO COM SUCESSO');</script>";
-            }
-            else{
-                mysql_close($con);
-                echo "<script>window.location='consultaPedidos.php';alert('PEDIDO REABERTO COM SUCESSO');</script>";
-            }
-        }
+        
         elseif ($funcao == "estornarPedido") {
             $codigoPedido = $_GET["codigoPedido"];
-            $update = "update pedidos_faturados set data_horaEstorno = CURRENT_TIMESTAMP(), flag_estorno = 1 where codigo_pedidoFaturado = $codigoPedido";
+            $usuario = $_SESSION["CODIGO"];
+            $update = "update pedidos_faturados set data_horaEstorno = CURRENT_TIMESTAMP(), flag_estorno = 1, usuario_estornador = $usuario where codigo_pedidoFaturado = $codigoPedido";
             $resultado = mysql_query($update);
             if ($resultado) {
                 $update = "update pedido set sitaucao = 'C' where codigo_pedido = $codigoPedido";
                 $resultado = mysql_query($update);
                 if ($resultado) {
-                     echo "<script>window.location='consultaPedidos.php';alert('ESTORNADO COM SUCESSO');</script>";
+                    
+                   echo "<script>window.location='lucratividade.php';alert('FATURA ESTORNADA COM SUCESSO');</script>";
                 }
                 else{
-                    echo "<script>window.location='consultaPedidos.php';alert('ERRO AO TENTAR ESTONAR FATURA');</script>";
+                    echo "<script>window.location='lucratividade.php';alert('ERRO AO ESTORNAR FATURA');</script>";
                 }
             }
             else {
-                echo "<script>window.location='consultaPedidos.php';alert('ERRO AO ESTORNAR PEDIDO');</script>";
+                echo "<script>window.location='lucratividade.php';alert('OCORREU UM ERRO INESPERADO, TENTE NOVAMENTE');</script>";
             }
             
-        }    
+        }
+        elseif ($funcao == "consultaFatura") {
+            //FUNCAO QUE CONVERTE DATA BRASILEIRA EM DATA UNIVERSAL
+             function date_converter($_date = null) {
+                $format = '/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/';
+                if ($_date != null && preg_match($format, $_date, $partes)) {
+                    return $partes[3].'-'.$partes[2].'-'.$partes[1];
+                }
+                return false;
+            }
+            $dataInicial = date_converter($_POST['dataInicial']);
+            $dataFinal = date_converter($_POST['dataFinal']);
+            $situacao = $_POST['situacao'];
+            $horaInicial = ' 00:00:00';
+            $horaFinal = ' 23:59:59';
+            $dataInicial = $dataInicial.$horaInicial;
+            $dataFinal = $dataFinal.$horaFinal;
+            $cont = 0;
+            
+            if($situacao == 1){
+               $sql = "select * from pedidos_faturados where flag_estorno = 1 and data_horaFaturamento BETWEEN ('$dataInicial') and ('$dataFinal')";
+                $resultado = mysql_query($sql);
+                if($resultado){
+                    while ($linha = mysql_fetch_array($resultado)) {
+                        $cont = 1;
+                    }
+                    switch ($cont) {
+                        case 0:
+                            mysql_close($con);
+                            echo "<script>window.location='lucratividade.php';alert('NAO HA REGISTROS');</script>";
+                            break;
+                        case 1:
+                            mysql_close($con);
+                            header("Location: exibeFaturaEstorno.php?dataInicial=$dataInicial&dataFinal=$dataFinal&situacao=$situacao");
+                            break;
+                    }
+                }
+                else{
+                    mysql_close($con);
+                    echo "<script>window.location='lucratividade.php';alert('OCORREU UM ERRO INESPERADO, TENTE NOVAMENTE');</script>";
+                }
+            }
+            elseif($situacao == 0){
+                $sql = "select * from pedidos_faturados where flag_estorno = 0 and data_horaFaturamento BETWEEN ('$dataInicial') and ('$dataFinal')";
+                $resultado = mysql_query($sql);
+                if ($resultado) {
+                     while ($linha = mysql_fetch_array($resultado)) {
+                    $cont = 1;
+                    }
+                    switch ($cont) {
+                        case 0:
+                            mysql_close($con);
+                            echo "<script>window.location='lucratividade.php';alert('NAO HA REGISTROS');</script>";
+                            
+                            break;
+                        case 1:
+                            mysql_close($con);
+                            header("Location: exibeFaturaEstorno.php?dataInicial=$dataInicial&dataFinal=$dataFinal&situacao=$situacao");
+                            break;
+                    }
+                }
+                else{
+                    mysql_close($con);
+                    echo "<script>window.location='lucratividade.php';alert('UM ERRO INESPERADO ACONTECEU, TENTE NOVAMENTE!');</script>";
+                }
+            }
+        }
    }
+
    else{
        header("Location: cadastros.php");
    }

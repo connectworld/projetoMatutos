@@ -5,7 +5,7 @@ include 'validaAcesso.php';
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-        <title>Cadastro de Usuário</title>
+        <title>Lucratividade</title>
     </head>
     <meta charset="UTF-8" />
 
@@ -14,7 +14,7 @@ include 'validaAcesso.php';
     <meta name="robots" content="all, index, follow" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Cadastro de Usuário</title>
+    <title>Restaurante Matutos</title>
     <meta name="description" content="Responsive Retina-Friendly Menu with different, size-dependent layouts" />
     <meta name="keywords" content="responsive menu, retina-ready, icon font, media queries, css3, transition, mobile" />
     <meta name="author" content="Codrops" />
@@ -29,10 +29,33 @@ include 'validaAcesso.php';
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <script type="text/javascript" src="js_file/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="js_file/jquery.maskedinput.js"></script>
-    <script type="text/javascript" src="js_file/jquery.maskMoney.js"></script>
     <script type="text/javascript" src="js_file/jquery.alphanumeric.js"></script>
     <script type="text/javascript" src="jquery/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="js_file/form.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dataInicial").datepicker({
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                nextText: 'Próximo',
+                prevText: 'Anterior'
+            });
+            $("#dataFinal").datepicker({
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                nextText: 'Próximo',
+                prevText: 'Anterior'
+            });
+        });
+    </script>
 
     <body>
          <?php 
@@ -52,64 +75,63 @@ include 'validaAcesso.php';
 
                             <a href="gerenciadoDePaginas.php?pagina=cadastros" style="text-decoration: none;">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
-                            </a>
-                            <br><br>
+                            </a><br><br>
                             <br>
                             <div>
-                                <h2 align="center">Tela de Cadastro de Usuário</h2>
+                                <h2 align="center">Tela de Lucratividade</h2>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-offset-4 col-sm-4">
-                                    <form method="post" action="usuarioController.php" enctype="multipart/form-data">
-                                        <input type="hidden" name="funcao" id="funcao"  value="salvarUsuario"/>
+                                    <form method="post" action="pedidoController.php">
+                                        <input type="hidden" value="consultaFatura" name="funcao" id="funcao"/>
                                         <div class="form-group">
-                                            <label for="validate-text">Nome:</label>
+                                            <label for="validate-text">De:</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control"size="10" name="nome" id="nome" placeholder="Nome" required>
+                                                <input type="text" class="form-control"size="10" name="dataInicial" id="dataInicial" placeholder="De" required>
                                                 <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="validate-text">Login:</label>
+                                            <label for="validate-text">A:</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control"size="10" name="login" id="login" placeholder="descricao" required>
-                                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>                                
+                                                <input type="text" class="form-control" name="dataFinal" id="dataFinal" placeholder="De" required>
+                                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="validate-text">Senha:</label>
-                                            <div class="input-group">
-                                                <input type="password" class="form-control"size="10" name="senha" id="senha" placeholder="Senha" required>
-                                                <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>                                
+                                            <label for="disciplina" class="col-md-3 control-label">Disciplina:</label>
+                                            <div class="col-md-9">
+                                                <select name="situacao" class="form-control">
+                                                    <option value="1">Estornados - E</option>
+                                                    <option value="0">Faturados - F</option>
+                                                </select>
                                             </div>
                                         </div>
-
-                                        <br><br><br>
-                                        <button type="submit" class="btn btn-primary col-xs-12" disabled>Cadastrar</button>
+                                        <br><br><br><br>
+                                            <div>
+                                                <button type="submit" class="btn btn-primary col-xs-12" disabled>Pesquisar</button>
+                                           </div>
                                     </form>
+                                    <br><br><br><br>
                                 </div>
-                                <br><br><br><br>
                             </div>
-                        </div>
-                        <br><br><br><br>
-                        <?php
-                        mysql_close($con);
-                        include 'rodape.php';
-                        ?>
+                            <?php
+                            mysql_close($con);
+                            include 'rodape.php';
+                            ?>
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
         <script type="text/javascript">
+
             $(document).ready(function () {
-                $('#preco').numeric();
-                $('#preco').maskMoney({showSymbol: true, symbol: "R$", decimal: ".", thousands: "."});
+                $("#dataInicial").mask("99/99/9999");
+                $("#dataFinal").mask("99/99/9999");
             });
         </script> 
     </body>
 </html>
-
-
 

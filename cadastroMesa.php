@@ -34,6 +34,11 @@ include 'validaAcesso.php';
     <script type="text/javascript" src="js_file/form.js"></script>
 
     <body>
+         <?php 
+                include_once 'conectaBanco.php';
+                $con = abrirConexao();
+                mysql_set_charset('UTF8', $con);        
+            ?>
         <div align="center">
             <table border="1" style="width: 90%;">
                 <tr><td>
@@ -79,6 +84,7 @@ include 'validaAcesso.php';
                         </div>
                         <br><br><br><br>
                         <?php
+                        mysql_close($con);
                         include 'rodape.php';
                         ?>
                         </div>

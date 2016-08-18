@@ -60,6 +60,10 @@
                 limpaSessao();
                 header("Location: listarUsuario.php");
                 break;
+            case "lucratividade":
+                limpaSessao();
+                header("Location: lucratividade.php");
+                break;
         }
     }
 ?>

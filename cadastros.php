@@ -21,6 +21,11 @@
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	</head>
 	<body>
+            <?php 
+                include_once 'conectaBanco.php';
+                $con = abrirConexao();
+                mysql_set_charset('UTF8', $con);        
+            ?>
 	<br><br>
 	<div align="center">
 	<table border="1" style="width: 90%;">
@@ -102,10 +107,17 @@
 				        	</a>
                                             <a class="links" href="gerenciadoDePaginas.php?pagina=listarUsuario" style="text-decoration: none;"><div align="center">LISTAR USUÁRIO</div></a>
 				        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+				        	<a href="gerenciadoDePaginas.php?pagina=lucratividade" style="text-decoration: none;">
+                                                    <img class="img-responsive" src="img/lucro.png"/><br>
+				        	</a>
+                                            <a class="links" href="gerenciadoDePaginas.php?pagina=lucratividade" style="text-decoration: none;"><div align="center">LUCRATIVIDADE</div></a>
+				        </div>
 				</div>
 			</div>
                             <BR><BR>
 			<?php 
+                                                mysql_close($con);
 			include 'rodape.php';
 		?>
 		</div><!-- /container -->

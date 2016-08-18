@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 17-Ago-2016 às 23:40
+-- Generation Time: 18-Ago-2016 às 23:20
 -- Versão do servidor: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `mesa` (
   `observacao` varchar(100) DEFAULT NULL,
   `nome` varchar(100) DEFAULT NULL,
   `exclusao_logica` int(11) DEFAULT NULL COMMENT '0 - Excluiu, 1 - Ativo'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `mesa`
@@ -143,7 +143,8 @@ INSERT INTO `mesa` (`codigo_mesa`, `observacao`, `nome`, `exclusao_logica`) VALU
 (4, '4', 'ibura', 1),
 (5, 'g', 'boa viagem', 1),
 (6, 'd1', 'dd', 1),
-(7, 'brito', 'leandro', NULL);
+(7, 'brito', 'leandro', NULL),
+(8, 'brito', 'leandro', NULL);
 
 -- --------------------------------------------------------
 
@@ -177,21 +178,21 @@ INSERT INTO `pedido` (`codigo_pedido`, `data_pedido`, `cliente`, `valor_total`, 
 (10, '2016-08-03', 'atonio oliveira', NULL, 'A', 1),
 (11, '2016-08-03', 'atonio oliveira', 1.00, 'A', 1),
 (12, '2016-08-03', 'Algusto Limeira', NULL, 'A', 1),
-(13, '2016-08-03', 'Cleiton Chavier', 55.55, 'A', 1),
-(14, '2016-08-03', 'cleiton jose', 61.10, 'A', 1),
-(15, '2016-08-03', 'Weverton', 55.55, 'A', 1),
+(13, '2016-08-03', 'Cleiton Chavier', 55.55, 'F', 1),
+(14, '2016-08-03', 'cleiton jose', 61.10, 'F', 1),
+(15, '2016-08-03', 'Weverton', 55.55, 'F', 1),
 (16, '2016-08-04', 'augusto limera', 50.00, 'A', 1),
 (17, '2016-08-04', 'JORGE BATISTA DOS SANTOS', 100.00, 'A', 2),
 (18, '2016-08-05', 'LEANDRO BRITO', 55.55, 'A', 1),
 (19, '2016-08-05', 'JORGE BATISTA DOS SANTOS', 104.00, 'A', 1),
 (20, '2016-08-05', 'JORGE BATISTA', 400.00, 'A', 2),
-(21, '2016-08-08', 'JORGE BATISTA', 427.75, 'A', 2),
-(22, '2016-08-12', 'JORGE BATISTA DA SILVA', 161.10, 'A', 2),
+(21, '2016-08-08', 'JORGE BATISTA', 427.75, 'C', 2),
+(22, '2016-08-12', 'JORGE BATISTA DA SILVA', 161.10, 'F', 2),
 (23, '2016-08-13', 'João', 288.85, 'C', 2),
 (24, '2016-08-13', 'landu', 316.65, 'F', 5),
 (25, '2016-08-13', 'jorge', 55.50, 'F', 4),
 (26, '2016-08-13', 'myar', 600.00, 'F', 2),
-(27, '2016-08-13', 'taci', 33.30, 'A', 3),
+(27, '2016-08-13', 'taci', 33.30, 'F', 3),
 (28, '2016-08-13', 'bb', 111.10, 'F', 4);
 
 -- --------------------------------------------------------
@@ -207,19 +208,28 @@ CREATE TABLE IF NOT EXISTS `pedidos_faturados` (
   `codigo_pedidoFaturado` int(11) NOT NULL,
   `cliente_pedido` varchar(100) NOT NULL,
   `valor_totalPedido` double(7,2) NOT NULL,
-  `flag_estorno` int(11) NOT NULL COMMENT '0 - Pedido não estornadado, 1, - Pedido estornado'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `flag_estorno` int(11) NOT NULL COMMENT '0 - Pedido não estornadado, 1, - Pedido estornado',
+  `usuario_faturador` int(11) DEFAULT NULL,
+  `usuario_estornador` int(11) DEFAULT NULL,
+  `data_pedidoFaturado` date DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `pedidos_faturados`
 --
 
-INSERT INTO `pedidos_faturados` (`codigo_faturamento`, `data_horaFaturamento`, `data_horaEstorno`, `codigo_pedidoFaturado`, `cliente_pedido`, `valor_totalPedido`, `flag_estorno`) VALUES
-(1, '2016-08-13 13:13:36', '0000-00-00 00:00:00', 24, 'landu', 316.65, 0),
-(2, '2016-08-13 13:45:54', '0000-00-00 00:00:00', 25, 'jorge', 55.50, 0),
-(3, '2016-08-13 14:44:48', '0000-00-00 00:00:00', 26, 'myar', 600.00, 0),
-(4, '2016-08-13 14:53:09', '0000-00-00 00:00:00', 28, 'bb', 111.10, 0),
-(5, '2016-08-13 14:53:16', '0000-00-00 00:00:00', 28, 'bb', 111.10, 0);
+INSERT INTO `pedidos_faturados` (`codigo_faturamento`, `data_horaFaturamento`, `data_horaEstorno`, `codigo_pedidoFaturado`, `cliente_pedido`, `valor_totalPedido`, `flag_estorno`, `usuario_faturador`, `usuario_estornador`, `data_pedidoFaturado`) VALUES
+(1, '2016-08-13 13:13:36', '0000-00-00 00:00:00', 24, 'landu', 316.65, 0, NULL, NULL, NULL),
+(2, '2016-08-13 13:45:54', '0000-00-00 00:00:00', 25, 'jorge', 55.50, 0, NULL, NULL, NULL),
+(3, '2016-08-13 14:44:48', '0000-00-00 00:00:00', 26, 'myar', 600.00, 0, NULL, NULL, NULL),
+(4, '2016-08-13 14:53:09', '0000-00-00 00:00:00', 28, 'bb', 111.10, 0, NULL, NULL, NULL),
+(5, '2016-08-13 14:53:16', '0000-00-00 00:00:00', 28, 'bb', 111.10, 0, NULL, NULL, NULL),
+(6, '2016-08-18 21:10:50', '2016-08-18 21:10:50', 21, 'JORGE BATISTA', 427.75, 1, 1, 1, NULL),
+(7, '2016-08-18 16:05:46', '0000-00-00 00:00:00', 22, 'JORGE BATISTA DA SILVA', 161.10, 0, 1, NULL, NULL),
+(8, '2016-08-18 16:31:38', '0000-00-00 00:00:00', 13, 'Cleiton Chavier', 55.55, 0, 1, NULL, NULL),
+(9, '2016-08-18 16:34:13', '0000-00-00 00:00:00', 14, 'cleiton jose', 61.10, 0, 1, NULL, NULL),
+(10, '2016-08-18 16:36:23', '0000-00-00 00:00:00', 15, 'Weverton', 55.55, 0, 1, NULL, NULL),
+(11, '2016-08-18 16:38:06', '0000-00-00 00:00:00', 27, 'taci', 33.30, 0, 1, NULL, NULL);
 
 --
 -- Acionadores `pedidos_faturados`
@@ -311,7 +321,7 @@ ALTER TABLE `item_pedido`
 -- AUTO_INCREMENT for table `mesa`
 --
 ALTER TABLE `mesa`
-  MODIFY `codigo_mesa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `codigo_mesa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `pedido`
 --
@@ -321,7 +331,7 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT for table `pedidos_faturados`
 --
 ALTER TABLE `pedidos_faturados`
-  MODIFY `codigo_faturamento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `codigo_faturamento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `usuarios`
 --

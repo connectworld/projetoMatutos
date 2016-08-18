@@ -62,19 +62,9 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                         <a href="gerenciadoDePaginas.php?pagina=cadastros">
 				<button class="btn btn-lg btn-primary btn-block" type="submit">MENU</button>
 			</a><br><br>
-                        <!--
-                        <table  class="table">
-                           <thead>
-                                <tr align="right" style='background-color: #0080FF;'>
-                                    <th align="right" style='width: 1%; color : black'> <div align="center"> CODIGO </div></th>
-                                    <th align="right" style='width: 8%; color : black'> <div align="center"> DATA </div></th>
-                                </tr>
-                           </thead>
-                           <tr align="center" style="margin-top: 10px;">
-                                <td align="center" style="color : black"><?php echo $array[0];?></td>
-                                <td align="center" style="color : black"><?php echo $array[1];?></td>
-                           </tr>
-                        </table> -->
+                        <div>
+                            <h2 align="center">Faturamento de Pedido</h2>
+                        </div>
                         <div>
                             <table border="1" style="width: 30%;">
                                 <tr>
@@ -186,13 +176,13 @@ if (isset($_GET["codigoPedido"]) && isset($_GET["nomeMesa"])){
                     </table>
             
 			<h1>VALORES</h1><br>             
-                        <form action="pedidoController.php" method="post">
+                        <form action="pedidoController.php" method="post" id="formulario">
                                <input type="hidden" value="faturarPedido" name="funcao" id="funcao"/>
                                <input type="hidden" value="<?php echo $array[0];?>" name="codigoPedido" id="codigoPedido"/>
                                 VALOR TOTAL: <input type="text" name="valor_total" riquered="required" value="<?php echo $valorTotal;?>" id="valor_unitario" />
                                 VALOR RECEBIDO <input type="text" name="valor_recebido" required="required" id="qnt"/>
                                 TROCO: <input type="text" name="total" id="total" required="required" readonly="readonly" />
-                                <input type="submit" class="login loginmodal-submit" value="FATURAR">
+                                <a href="cadastros.php" target="_blank" onClick="document.getElementById('formulario').submit();">ENVIAR</a>
                            </form>
                         
 		</div>
